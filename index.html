@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>幻域征途</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sf: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "SF Pro Display",
+          "SF Pro Text",
+          "Helvetica Neue",
+          "PingFang SC",
+          "Microsoft YaHei",
+          "sans-serif"
+        ]
+      },
+      colors: {
+        inkblue: {
+          500: "#2b3d75",
+          400: "#4a60a1",
+          300: "#7c91c9",
+          200: "#b0c0e4",
+          100: "#dfe7f7"
+        }
+      }
+    }
+  }
+}
+</script>
+<style type="text/tailwindcss">
+@layer utilities {
+  .text-shadow-soft {
+    text-shadow: 0 0 6px rgba(124, 145, 201, 0.35);
+  }
+  .panel-black {
+    background: rgba(20, 28, 54, 0.25);
+    border: 1px solid rgba(74, 96, 161, 0.25);
+    box-shadow: inset 0 0 24px rgba(43, 61, 117, 0.08), 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+  .line-soft {
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(124, 145, 201, 0.3),
+      rgba(176, 192, 228, 0.45),
+      rgba(124, 145, 201, 0.3),
+      transparent);
+    height: 1px;
+    width: 100%;
+  }
+}
+</style>
+<style>
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-weight: 900 !important;
+  letter-spacing: 0.02em;
+}
+body {
+  background-color: #000000;
+  color: #dfe7f7;
+  overflow-x: hidden;
+}
+.cursor-ring {
+  position: fixed;
+  width: 170px;
+  height: 170px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(176, 192, 228, 0.12) 0%, rgba(124, 145, 201, 0.05) 45%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 59;
+  transition: left 0.16s ease-out, top 0.16s ease-out;
+}
+.cursor-outer {
+  position: fixed;
+  width: 440px;
+  height: 440px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(124, 145, 201, 0.1) 0%, rgba(74, 96, 161, 0.05) 40%, transparent 72%);
+  filter: blur(52px);
+  pointer-events: none;
+  z-index: 58;
+  transition: left 0.2s ease-out, top 0.2s ease-out;
+}
+.blink::after {
+  content: "_";
+  margin-left: 6px;
+  color: #7c91c9;
+  animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+.dl-btn {
+  background: rgba(43, 61, 117, 0.65);
+  border: 1px solid rgba(124, 145, 201, 0.4);
+  border-radius: 9999px;
+  color: #dfe7f7;
+  transition: all 0.25s ease-out;
+  display: inline-block;
+  text-align: center;
+}
+.dl-btn:hover {
+  background: rgba(43, 61, 117, 0.85);
+  box-shadow: 0 0 0 1px rgba(176, 192, 228, 0.45), 0 10px 30px rgba(30, 42, 82, 0.35);
+  transform: translateY(-1px);
+}
+.dl-btn:active {
+  transform: translateY(0);
+}
+.rounded-ellipse {
+  border-radius: 9999px;
+}
+.game-img-placeholder {
+  background: rgba(25, 25, 25, 0.6);
+  border: 1px dashed rgba(124, 145, 201, 0.35);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 360px;
+  overflow: hidden;
+}
+.game-img-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+a {
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-outer" id="cursorOuter"></div>
+<header class="sticky top-0 z-50 bg-black/70 backdrop-blur-md border-b border-inkblue-500/25">
+  <div class="max-w-7xl mx-auto px-5 h-16 flex justify-between items-center">
+    <div class="text-[17px] md:text-[19px] tracking-[0.18em] text-white text-shadow-soft">
+      SHITOU<span class="text-inkblue-300 mx-2">·</span>幻域征途
+    </div>
+    <!-- 右上角下载按钮 -->
+    <a href="huanyu-64.zip" download="幻域征途.zip" class="dl-btn px-5 py-2 text-[14px]">
+      <i class="fa fa-download mr-2"></i>下载
+    </a>
+  </div>
+</header>
+<section class="relative z-10 max-w-7xl mx-auto px-5 pt-24 pb-20">
+  <div class="grid lg:grid-cols-2 gap-12 items-center">
+    <div>
+      <div class="inline-block px-3 py-1 rounded-ellipse border border-inkblue-400/40 text-inkblue-200 text-sm mb-6">
+        C++ CONSOLE GAME · VERSION 1.0.26
+      </div>
+      <h1 class="text-4xl md:text-6xl text-white tracking-wider mb-6 leading-tight">
+        幻域征途
+      </h1>
+      <p class="text-base md:text-lg text-inkblue-100/75 leading-relaxed max-w-xl">
+        踏入由代码构筑的异界疆域。这是一款原生 C++ 控制台文字策略冒险，没有华丽贴图，却拥有完整的世界逻辑、分支剧情、角色养成与回合战斗。每一次输入指令，都将改写你的旅途走向。
+      </p>
+      <div class="mt-10 flex flex-wrap gap-3">
+        <span class="px-3 py-1 border border-inkblue-400/40 text-inkblue-200 text-sm rounded-ellipse">C++</span>
+        <span class="px-3 py-1 border border-inkblue-400/40 text-inkblue-200 text-sm rounded-ellipse">控制台</span>
+        <span class="px-3 py-1 border border-inkblue-500/40 text-inkblue-300 text-sm rounded-ellipse">文字冒险</span>
+        <span class="px-3 py-1 border border-inkblue-500/40 text-inkblue-300 text-sm rounded-ellipse">策略战斗</span>
+      </div>
+      <div class="mt-10 text-sm text-inkblue-300/70">
+        <div class="blink">> 系统就绪，等待启动游戏</div>
+      </div>
+    </div>
+    <div class="game-img-placeholder">
+      <img src="huanyu-title.png" alt="幻域征途 游戏主菜单">
+    </div>
+  </div>
+</section>
+<div class="max-w-7xl mx-auto px-5">
+  <div class="line-soft"></div>
+</div>
+<section class="relative z-10 max-w-7xl mx-auto px-5 py-20">
+  <h2 class="text-2xl md:text-3xl text-white mb-6">游戏介绍</h2>
+  <div class="panel-black rounded-xl p-6 md:p-8">
+    <p class="text-inkblue-100/75 leading-relaxed">
+      《幻域征途》由 C++ 开发，基于 Windows 控制台运行，纯单机、全程离线，轻量化易部署，仅需基础 Windows 环境即可启动。
+游戏拥有完整 RPG 框架，包含角色养成、背包道具、商店交易、多区域探索与回合战斗；多张风格地图配有独立魔物池，含史莱姆、巨型蜘蛛、暗影巨龙 BOSS 等，击杀魔物获取经验与金币，升级提升生命、攻防属性。
+玩家可在商店购买药水、武器、防具，道具支持背包管理、回血与装备穿戴；自带存档读档，随时保存、接续冒险。
+美术采用 ASCII 字符画，以字符绘制场景与怪物，依靠文字指令交互。玩法承袭经典回合 RPG，上手简单。
+本作仅支持 Windows 平台，不兼容 Linux、macOS，程序包解压即玩。
+    </p>
+    <p class="text-inkblue-100/75 leading-relaxed mt-4">
+      剧情拥有多条分支走向，不同选择会触发独有的事件与结局。简约的终端外壳之下，是一套完整的成长、战斗、存档体系，适合偏爱沉浸式文字叙事、喜欢策略博弈的玩家。
+    </p>
+  </div>
+</section>
+<section id="download" class="relative z-10 max-w-7xl mx-auto px-5 pb-20">
+  <h2 class="text-2xl md:text-3xl text-white mb-6">下载</h2>
+  <div class="panel-black rounded-xl p-6 md:p-8">
+    <div class="grid md:grid-cols-2 gap-6 items-center">
+      <div>
+        <div class="text-inkblue-300 text-sm mb-2">CURRENT BUILD</div>
+        <h3 class="text-xl text-white mb-4">幻域征途 1.0beta</h3>
+        <ul class="space-y-2 text-inkblue-100/75 text-[15px]">
+          <li><i class="fa fa-check text-inkblue-300 mr-2"></i>文件类型：压缩包</li>
+          <li><i class="fa fa-check text-inkblue-300 mr-2"></i>内存需求：800MB</li>
+          <li><i class="fa fa-check text-inkblue-300 mr-2"></i>更新时间：2026年11月2日</li>
+          <li><i class="fa fa-check text-inkblue-300 mr-2"></i>运行环境：Windows 7及以上</li>
+        </ul>
+      </div>
+      <div class="flex justify-center md:justify-end">
+        <!-- 下载区只保留一个【下载】按钮 -->
+        <a href="huanyu-64.zip" download="幻域征途.zip" class="dl-btn px-8 py-4 text-[15px]">
+          <i class="fa fa-download mr-2"></i>下载
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="relative z-10 max-w-7xl mx-auto px-5 pb-20">
+  <h2 class="text-2xl md:text-3xl text-white mb-6">配置要求</h2>
+  <div class="panel-black rounded-xl p-6 md:p-8">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div>
+        <h3 class="text-inkblue-300 text-lg mb-4">最低配置</h3>
+        <ul class="space-y-2 text-inkblue-100/75 text-[15px]">
+          <li>操作系统：Windows 7 及以上</li>
+          <li>处理器：Intel CORE i2 以上</li>
+          <li>内存：800MB</li>
+          <li>硬盘：100MB</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-inkblue-200 text-lg mb-4">推荐配置</h3>
+        <ul class="space-y-2 text-inkblue-100/75 text-[15px]">
+          <li>操作系统：Windows 10 / Windows 11</li>
+          <li>处理器：Intel CORE i5 以上</li>
+          <li>内存：1.5GB</li>
+          <li>硬盘：200MB</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="relative z-10 border-t border-inkblue-500/25 bg-black/70 py-8">
+  <div class="max-w-7xl mx-auto px-5 text-center text-sm text-inkblue-300/70">
+    <div class="text-white tracking-[0.18em] mb-3">
+      SHITOU<span class="text-inkblue-300 mx-2">·</span>幻域征途
+    </div>
+    <p>© 2027 SHITOU. All Rights Reserved.</p>
+    <p class="mt-2">邮箱：shijingyi3843060@outlook.com</p>
+  </div>
+</footer>
+<script>
+const ring = document.getElementById("cursorRing");
+const outer = document.getElementById("cursorOuter");
+document.addEventListener("mousemove", (e) => {
+  ring.style.left = (e.clientX - 85) + "px";
+  ring.style.top = (e.clientY - 85) + "px";
+  outer.style.left = (e.clientX - 220) + "px";
+  outer.style.top = (e.clientY - 220) + "px";
+});
+</script>
+</body>
+</html>
