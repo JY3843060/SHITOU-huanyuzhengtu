@@ -139,27 +139,69 @@ body {
 a {
   text-decoration: none;
 }
+/* 弹窗样式 */
+.modal-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  z-index: 999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-box {
+  width: 100%;
+  max-width: 460px;
+  background: #080c1a;
+  border: 1px solid rgba(74, 96, 161, 0.35);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+.modal-img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+.modal-text {
+  color:#b0c0e4;
+  margin-bottom:24px;
+}
 </style>
 </head>
 <body>
 <div class="cursor-ring" id="cursorRing"></div>
 <div class="cursor-outer" id="cursorOuter"></div>
+
+<!-- 弹窗 -->
+<div class="modal-mask" id="downloadModal">
+  <div class="modal-box">
+    <img class="modal-img" src="modal-tip.png" alt="SHITOU开发者计划总群二维码">
+    <div class="modal-text">
+      请先加入石头开发者计划总群，获取下载资格
+    </div>
+    <button class="dl-btn px-6 py-3" id="confirmDownload">我已加入石头开发者计划总群</button>
+  </div>
+</div>
+
 <header class="sticky top-0 z-50 bg-black/70 backdrop-blur-md border-b border-inkblue-500/25">
   <div class="max-w-7xl mx-auto px-5 h-16 flex justify-between items-center">
     <div class="text-[17px] md:text-[19px] tracking-[0.18em] text-white text-shadow-soft">
       SHITOU<span class="text-inkblue-300 mx-2">·</span>幻域征途
     </div>
-    <!-- 右上角下载按钮 -->
-    <a href="huanyu-64.zip" download="幻域征途.zip" class="dl-btn px-5 py-2 text-[14px]">
+    <!-- 右上角下载按钮，改为触发弹窗 -->
+    <button class="dl-btn px-5 py-2 text-[14px]" onclick="openModal()">
       <i class="fa fa-download mr-2"></i>下载
-    </a>
+    </button>
   </div>
 </header>
 <section class="relative z-10 max-w-7xl mx-auto px-5 pt-24 pb-20">
   <div class="grid lg:grid-cols-2 gap-12 items-center">
     <div>
       <div class="inline-block px-3 py-1 rounded-ellipse border border-inkblue-400/40 text-inkblue-200 text-sm mb-6">
-        C++ CONSOLE GAME · VERSION 1.0.26
+        C++ CONSOLE GAME · VERSION 2.0 beta
       </div>
       <h1 class="text-4xl md:text-6xl text-white tracking-wider mb-6 leading-tight">
         幻域征途
@@ -200,6 +242,21 @@ a {
     </p>
   </div>
 </section>
+
+<!-- ✅ 新增 更新日志 -->
+<section class="relative z-10 max-w-7xl mx-auto px-5 pb-20">
+  <h2 class="text-2xl md:text-3xl text-white mb-6">更新日志</h2>
+  <div class="panel-black rounded-xl p-6 md:p-8">
+    <p class="text-inkblue-200 mb-4">11月21日至12月21日无新版本发布，当前版本停留在 2.0 beta</p>
+    <ul class="space-y-3 text-inkblue-100/75 text-[15px]">
+      <li><i class="fa fa-code-fork text-inkblue-300 mr-2"></i>11月2日 — 1.0 beta</li>
+      <li><i class="fa fa-code-fork text-inkblue-300 mr-2"></i>11月12日 — 2.0 beta</li>
+      <li><i class="fa fa-code-fork text-inkblue-300 mr-2"></i>12月22日 — 3.0 beta</li>
+      <li><i class="fa fa-code-fork text-inkblue-300 mr-2"></i>12月30日 — 4.0 beta</li>
+    </ul>
+  </div>
+</section>
+
 <section id="download" class="relative z-10 max-w-7xl mx-auto px-5 pb-20">
   <h2 class="text-2xl md:text-3xl text-white mb-6">下载</h2>
   <div class="panel-black rounded-xl p-6 md:p-8">
@@ -215,10 +272,10 @@ a {
         </ul>
       </div>
       <div class="flex justify-center md:justify-end">
-        <!-- 下载区只保留一个【下载】按钮 -->
-        <a href="huanyu-64.zip" download="幻域征途.zip" class="dl-btn px-8 py-4 text-[15px]">
+        <!-- 下载区块按钮，同样触发弹窗 -->
+        <button class="dl-btn px-8 py-4 text-[15px]" onclick="openModal()">
           <i class="fa fa-download mr-2"></i>下载
-        </a>
+        </button>
       </div>
     </div>
   </div>
@@ -267,6 +324,24 @@ document.addEventListener("mousemove", (e) => {
   outer.style.left = (e.clientX - 220) + "px";
   outer.style.top = (e.clientY - 220) + "px";
 });
+
+// 弹窗逻辑
+const modal = document.getElementById("downloadModal");
+function openModal(){
+  modal.style.display = "flex";
+}
+// 点击遮罩关闭弹窗
+modal.addEventListener("click",function(e){
+  if(e.target === modal) modal.style.display = "none";
+})
+// 确认下载
+document.getElementById("confirmDownload").onclick = function(){
+  const a = document.createElement("a");
+  a.href = "huanyu-64.zip";
+  a.download = "幻域征途.zip";
+  a.click();
+  modal.style.display = "none";
+}
 </script>
 </body>
 </html>
